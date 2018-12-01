@@ -13,5 +13,6 @@ matrix:
   fast_finish: true
 
 script:
-  - cargo build --verbose --all
-  - cargo test --verbose --all
+  - cargo build -q --release --all
+  - cargo test -q --release --all
+  - cargo run --release
