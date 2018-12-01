@@ -18,15 +18,13 @@ pub fn part1(input: &[i32]) -> i32 {
 pub fn part2(input: &[i32]) -> i32 {
     let mut result = 0;
     let mut seen_numbers = HashSet::new();
-    loop {
-        for elem in input {
-            if seen_numbers.contains(&result) {
-                return result;
-            }
-            seen_numbers.insert(result);
-            result += elem;
+    for elem in input.iter().cycle() {
+        if !seen_numbers.insert(result) {
+            return result;
         }
+        result += elem;
     }
+    result
 }
 
 #[cfg(test)]
