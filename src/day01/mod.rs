@@ -12,11 +12,7 @@ pub fn parse_input(input: &str) -> Vec<i32> {
 }
 
 pub fn part1(input: &[i32]) -> i32 {
-    let mut result = 0;
-    for elem in input {
-        result += elem;
-    }
-    result
+    input.iter().sum()
 }
 
 pub fn part2(input: &[i32]) -> i32 {
@@ -25,7 +21,7 @@ pub fn part2(input: &[i32]) -> i32 {
     loop {
         for elem in input {
             if seen_numbers.contains(&result) {
-                return result.to_owned();
+                return result;
             }
             seen_numbers.insert(result);
             result += elem;
