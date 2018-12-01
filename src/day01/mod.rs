@@ -5,9 +5,10 @@ pub fn raw_input() -> String {
 }
 
 pub fn parse_input(input: &str) -> Vec<i32> {
-    input.split_whitespace().map(|e|
-        e.replace(",", "").replace("+", "").parse::<_>().unwrap()
-    ).collect()
+    input
+        .split_whitespace()
+        .map(|e| e.replace(",", "").replace("+", "").parse::<_>().unwrap())
+        .collect()
 }
 
 pub fn part1(input: &[i32]) -> i32 {
@@ -34,7 +35,7 @@ pub fn part2(input: &[i32]) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use day01::{raw_input, parse_input, part1, part2};
+    use day01::{parse_input, part1, part2, raw_input};
 
     #[test]
     fn test_parse_input() {
