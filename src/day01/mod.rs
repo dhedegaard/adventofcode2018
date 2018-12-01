@@ -21,14 +21,13 @@ pub fn part1(input: Vec<i32>) -> i32 {
 pub fn part2(input: Vec<i32>) -> i32 {
     let mut result = 0;
     let mut seen_numbers = HashSet::new();
-    seen_numbers.insert(0);
     loop {
         for elem in &input {
-            result += elem;
             if seen_numbers.contains(&result) {
                 return result.to_owned();
             }
             seen_numbers.insert(result.clone());
+            result += elem;
         }
     }
 }
