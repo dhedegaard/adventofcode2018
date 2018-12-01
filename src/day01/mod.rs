@@ -68,6 +68,6 @@ mod tests {
 
     #[test]
     fn result_part2() {
-        assert_eq!(part2(parse_input(&raw_input())), 71892);
+        assert_eq!(part2(&parse_input(&raw_input())), 71892);
     }
 }
