@@ -17,7 +17,7 @@ pub fn part1(input: &[i32]) -> i32 {
 
 pub fn part2(input: &[i32]) -> i32 {
     let mut result = 0;
-    let mut seen_numbers = HashSet::new();
+    let mut seen_numbers = HashSet::with_capacity(133_000);
     for elem in input.iter().cycle() {
         if !seen_numbers.insert(result) {
             return result;
