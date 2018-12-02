@@ -26,7 +26,9 @@ pub fn part1(input: &[&str]) -> u32 {
 pub fn part2(input: &[&str]) -> String {
     for (idx, id) in input.iter().enumerate() {
         for id2 in input.iter().skip(idx + 1) {
+            // If there's only a single digit different between the two ID's.
             if id.chars().zip(id2.chars()).filter(|(a, b)| a != b).count() == 1 {
+                // Return the characters that are equal, ignore the characters that differ between the IDs.
                 return id
                     .chars()
                     .zip(id2.chars())
