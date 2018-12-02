@@ -24,7 +24,7 @@ pub fn part2(input: &[i32]) -> i32 {
         }
         result += elem;
     }
-    result
+    unreachable!()
 }
 
 #[cfg(test)]
