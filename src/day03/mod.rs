@@ -1,3 +1,5 @@
+extern crate regex;
+
 use std::collections::{HashMap, HashSet};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -16,58 +18,18 @@ pub struct Claim {
 }
 
 pub fn parse_input(input: &str) -> Vec<Claim> {
+    let input_regex = regex::Regex::new(r"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)").unwrap();
     input
         .lines()
-        .map(|line| Claim {
-            number: line
-                .split("@")
-                .take(1)
-                .collect::<String>()
-                .replace("#", "")
-                .trim()
-                .parse::<_>()
-                .unwrap(),
-            x: line
-                .split("@")
-                .skip(1)
-                .take(1)
-                .collect::<String>()
-                .split(",")
-                .take(1)
-                .collect::<String>()
-                .trim()
-                .parse::<_>()
-                .unwrap(),
-            y: line
-                .split(",")
-                .skip(1)
-                .take(1)
-                .collect::<String>()
-                .split(":")
-                .take(1)
-                .collect::<String>()
-                .trim()
-                .parse::<_>()
-                .unwrap(),
-            width: line
-                .split(":")
-                .skip(1)
-                .take(1)
-                .collect::<String>()
-                .split("x")
-                .take(1)
-                .collect::<String>()
-                .trim()
-                .parse::<_>()
-                .unwrap(),
-            height: line
-                .split("x")
-                .skip(1)
-                .take(1)
-                .collect::<String>()
-                .trim()
-                .parse::<_>()
-                .unwrap(),
+        .map(|line| {
+            let caps = input_regex.captures(line).unwrap();
+            Claim {
+                number: caps[1].parse().unwrap(),
+                x: caps[2].parse().unwrap(),
+                y: caps[3].parse().unwrap(),
+                width: caps[4].parse().unwrap(),
+                height: caps[5].parse().unwrap(),
+            }
         }).collect()
 }
 
