@@ -48,7 +48,7 @@ pub fn part1(input: &[Claim]) -> u32 {
         }
     }
 
-    map.values().filter(|&e| e >= &2).count() as u32
+    map.values().filter(|&e| *e >= 2).count() as u32
 }
 
 pub fn part2(input: &[Claim]) -> u32 {
@@ -73,8 +73,7 @@ pub fn part2(input: &[Claim]) -> u32 {
     input
         .iter()
         .map(|c| c.number)
-        .filter(|number| !seen_numbers.contains(number))
-        .next()
+        .find(|number| !seen_numbers.contains(number))
         .unwrap()
 }
 
