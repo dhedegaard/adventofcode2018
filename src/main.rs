@@ -2,6 +2,7 @@ extern crate time;
 
 mod day01;
 mod day02;
+mod day03;
 
 fn main() {
     {
@@ -31,5 +32,19 @@ fn main() {
         let result = day02::part2(&input);
         let diff = time::now() - before;
         println!("day02,\tpart2: {},\ttook {}", result, diff);
+    }
+    {
+        let input = day03::parse_input(&day03::get_input());
+        let before = time::now();
+        let result = day03::part1(&input);
+        let diff = time::now() - before;
+        println!("day03,\tpart1: {},\ttook {}", result, diff);
+    }
+    {
+        let input = day03::parse_input(&day03::get_input());
+        let before = time::now();
+        let result = day03::part2(&input);
+        let diff = time::now() - before;
+        println!("day03,\tpart2: {},\ttook {}", result, diff);
     }
 }
