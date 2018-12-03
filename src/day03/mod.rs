@@ -181,6 +181,6 @@ mod tests {
     fn test_part2() {
         let claims = parse_input(&get_input());
 
-        assert_eq!(part2(&claims), 3);
+        assert_eq!(part2(&claims), 1254);
     }
 }
