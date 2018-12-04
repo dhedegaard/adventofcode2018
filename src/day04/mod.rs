@@ -153,6 +153,6 @@ mod tests {
     fn test_part2_result() {
         let guard_data = parse_input(&get_input());
 
-        assert_eq!(part2(&guard_data), 99 * 45);
+        assert_eq!(part2(&guard_data), 65474);
     }
 }
