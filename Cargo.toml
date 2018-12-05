@@ -7,3 +7,4 @@ authors = ["Dennis Hedegaard <dennis@dhedegaard.dk>"]
 time = "0.1.40"
 itertools = "0.7.11"
 regex = "1"
+prettytable-rs = "0.8.0"
