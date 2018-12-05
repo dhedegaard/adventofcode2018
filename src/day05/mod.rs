@@ -1,11 +1,11 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, VecDeque};
 
 pub fn get_input() -> String {
     include_str!("input.txt").to_owned()
 }
 
 pub fn part1(input: &str) -> String {
-    let mut result = input.chars().collect::<Vec<_>>();
+    let mut result = input.chars().collect::<VecDeque<_>>();
     let mut i = 0;
     while !result.is_empty() && i < result.len() - 1 {
         let c = result[i];
