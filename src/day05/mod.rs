@@ -10,7 +10,7 @@ pub fn part1(input: &str) -> String {
     while !result.is_empty() && i < result.len() - 1 {
         let c = result[i];
         let c2 = result[i + 1];
-        if c != c2 && c.to_ascii_lowercase() == c2.to_ascii_lowercase() {
+        if c != c2 && c.eq_ignore_ascii_case(&c2) {
             result.remove(i);
             result.remove(i);
             if i > 0 {
