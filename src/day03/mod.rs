@@ -59,7 +59,7 @@ pub fn part2(input: &[Claim]) -> u32 {
         for dy in claim.y..claim.y + claim.height {
             for dx in claim.x..claim.x + claim.width {
                 let p = Point { x: dx, y: dy };
-                let mut vec = map.entry(p).or_insert(vec![]);
+                let mut vec = map.entry(p).or_insert_with(|| vec![]);
                 vec.push(claim.number);
                 if vec.len() > 1 {
                     for val in vec {
