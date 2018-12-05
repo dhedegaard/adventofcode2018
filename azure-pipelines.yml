@@ -1,11 +1,15 @@
-pool:
-  vmImage: 'Ubuntu 16.04'
+jobs:
+  - template: azure-pipelines-template.yml
+    parameters:
+      name: macOS
+      vmImage: macOS-10.13
 
-variables:
-  imageName: 'adventofcode2018:$(build.buildId)'
+  - template: azure-pipelines-template.yml
+    parameters:
+      name: Linux
+      vmImage: ubuntu-16.04
 
-steps:
-- script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
-- script: docker run -t --rm $(imageName)
-  displayName: 'docker run'
+  - template: azure-pipelines-template.yml
+    parameters:
+      name: Windows
+      vmImage: vs2017-win2016
