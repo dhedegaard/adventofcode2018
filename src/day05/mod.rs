@@ -24,21 +24,25 @@ pub fn part1(input: &str) -> String {
 }
 
 pub fn part2(input: &str) -> usize {
-    let mut min_length = input.len();
-    for unit in input.to_ascii_lowercase().chars().collect::<HashSet<_>>() {
-        // Remove the selected unit.
-        let polymer = input.to_owned().replace(unit, "").replace(unit.to_ascii_uppercase(), "");
-        let length = part1(&polymer).len();
-        if length < min_length {
-            min_length = length;
-        }
-    }
-    min_length
+    let processed_input = part1(input);
+    processed_input
+        .to_ascii_lowercase()
+        .chars()
+        .collect::<HashSet<_>>()
+        .iter()
+        .map(|&unit| -> usize {
+            part1(
+                &processed_input
+                    .replace(unit, "")
+                    .replace(unit.to_ascii_uppercase(), ""),
+            ).len()
+        }).min()
+        .unwrap()
 }
 
 #[cfg(test)]
 mod tests {
-    use day05::{part1, get_input, part2};
+    use day05::{get_input, part1, part2};
 
     #[test]
     fn test_part1_examples() {

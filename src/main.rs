@@ -63,4 +63,18 @@ fn main() {
         let diff = time::now() - before;
         println!("day04,\tpart2: {},\ttook {}", result, diff);
     }
+    {
+        let input = day05::get_input();
+        let before = time::now();
+        let result = day05::part1(&input).len();
+        let diff = time::now() - before;
+        println!("day05,\tpart1: {},\ttook {}", result, diff);
+    }
+    {
+        let input = day05::get_input();
+        let before = time::now();
+        let result = day05::part2(&input);
+        let diff = time::now() - before;
+        println!("day05,\tpart2: {},\ttook {}", result, diff);
+    }
 }
