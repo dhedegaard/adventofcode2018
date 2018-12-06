@@ -87,6 +87,20 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![5, 2, result, diff]);
     }
+    {
+        let input = day06::get_input();
+        let before = time::now();
+        let result = day06::part1(&day06::parse_input(&input));
+        let diff = time::now() - before;
+        table.add_row(row![5, 1, result, diff]);
+    }
+    {
+        let input = day06::get_input();
+        let before = time::now();
+        let result = day06::part2(&day06::parse_input(&input), 10_000);
+        let diff = time::now() - before;
+        table.add_row(row![5, 2, result, diff]);
+    }
 
     table.printstd();
 }
