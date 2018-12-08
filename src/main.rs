@@ -93,15 +93,30 @@ fn main() {
         let before = time::now();
         let result = day06::part1(&day06::parse_input(&input));
         let diff = time::now() - before;
-        table.add_row(row![5, 1, result, diff]);
+        table.add_row(row![6, 1, result, diff]);
     }
     {
         let input = day06::get_input();
         let before = time::now();
         let result = day06::part2(&day06::parse_input(&input), 10_000);
         let diff = time::now() - before;
-        table.add_row(row![5, 2, result, diff]);
+        table.add_row(row![6, 2, result, diff]);
     }
+    {
+        let input = day07::get_input();
+        let before = time::now();
+        let result = day07::part1(&mut day07::parse_input(&input));
+        let diff = time::now() - before;
+        table.add_row(row![7, 1, result, diff]);
+    }
+    {
+        let input = day07::get_input();
+        let before = time::now();
+        let result = day07::part2(&day07::parse_input_part2(&input), 5, 60);
+        let diff = time::now() - before;
+        table.add_row(row![7, 2, result, diff]);
+    }
+
 
     table.printstd();
 }
