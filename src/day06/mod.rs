@@ -70,8 +70,6 @@ pub fn part1(input: &Vec<Point>) -> u32 {
         }
     }
 
-    println!("{} - {}", at_edge.len(), input.len());
-
     map.iter()
         // Filter away the destinations that touches the edge of the map.
         .filter(|(point, _)| !at_edge.contains(point.to_owned()))
