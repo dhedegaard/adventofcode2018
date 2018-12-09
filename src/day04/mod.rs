@@ -64,7 +64,8 @@ pub fn part1(input: &GuardData) -> i32 {
                 .iter()
                 .map(|interval| interval.end_minute - interval.start_minute)
                 .sum()
-        }).unwrap();
+        })
+        .unwrap();
 
     // Determine the number of days slept on each minute.
     let mut minute_counts: HashMap<i32, i32> = HashMap::new();

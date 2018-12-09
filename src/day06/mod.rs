@@ -24,7 +24,8 @@ pub fn parse_input(input: &str) -> Vec<Point> {
                 x: mapped[0],
                 y: mapped[1],
             }
-        }).collect()
+        })
+        .collect()
 }
 
 pub fn part1(input: &Vec<Point>) -> u32 {
@@ -85,7 +86,6 @@ pub fn part2(input: &Vec<Point>, less_than: i32) -> u32 {
     let max_x = input.iter().map(|e| e.x).max().unwrap();
     let min_y = input.iter().map(|e| e.y).min().unwrap();
     let max_y = input.iter().map(|e| e.y).max().unwrap();
-
 
     let mut count = 0;
 

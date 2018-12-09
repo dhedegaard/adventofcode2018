@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet, BinaryHeap, BTreeSet};
+use std::collections::{BTreeSet, BinaryHeap, HashMap, HashSet};
 
 pub fn get_input() -> String {
     include_str!("input.txt").to_owned()
@@ -104,10 +104,9 @@ pub fn part2(input: &[(char, char)], workercount: usize, time_offset: i32) -> i3
     -time
 }
 
-
 #[cfg(test)]
 mod tests {
-    use day07::{parse_input, part1, get_input, part2, parse_input_part2};
+    use day07::{get_input, parse_input, parse_input_part2, part1, part2};
 
     const TEST_INPUT: &str = "Step C must be finished before step A can begin.
 Step C must be finished before step F can begin.
@@ -124,17 +123,20 @@ Step F must be finished before step E can begin.";
 
     #[test]
     fn part1_result() {
-        assert_eq!(part1(&mut parse_input(&get_input())), "OCPUEFIXHRGWDZABTQJYMNKVSL")
+        assert_eq!(
+            part1(&mut parse_input(&get_input())),
+            "OCPUEFIXHRGWDZABTQJYMNKVSL"
+        )
     }
 
     #[test]
     fn part2_examples() {
-        assert_eq!(part2(&mut parse_input_part2(TEST_INPUT),2 ,0), 15);
+        assert_eq!(part2(&mut parse_input_part2(TEST_INPUT), 2, 0), 15);
     }
 
     #[test]
     fn part2_result() {
-        assert_eq!(part2(&mut parse_input_part2(&get_input()),5 ,60), 991);
+        assert_eq!(part2(&mut parse_input_part2(&get_input()), 5, 60), 991);
     }
 
 }

@@ -30,7 +30,8 @@ pub fn parse_input(input: &str) -> Vec<Claim> {
                 width: caps[4].parse().unwrap(),
                 height: caps[5].parse().unwrap(),
             }
-        }).collect()
+        })
+        .collect()
 }
 
 pub fn get_input() -> String {

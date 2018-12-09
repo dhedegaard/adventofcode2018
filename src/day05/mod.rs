@@ -35,8 +35,10 @@ pub fn part2(input: &str) -> usize {
                 &processed_input
                     .replace(unit, "")
                     .replace(unit.to_ascii_uppercase(), ""),
-            ).len()
-        }).min()
+            )
+            .len()
+        })
+        .min()
         .unwrap()
 }
 
