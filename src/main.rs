@@ -12,6 +12,7 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 mod day09;
 
 fn main() {
@@ -118,6 +119,19 @@ fn main() {
         table.add_row(row![7, 2, result, diff]);
     }
     {
+        let input = day08::get_input();
+        let before = time::now();
+        let result = day08::part1(&day08::parse_input(&input));
+        let diff = time::now() - before;
+        table.add_row(row![8, 1, result, diff]);
+    }
+    {
+        let input = day08::get_input();
+        let before = time::now();
+        let result = day08::part2(&day08::parse_input(&input));
+        let diff = time::now() - before;
+        table.add_row(row![8, 2, result, diff]);
+    }    {
         let input = day09::get_input();
         let before = time::now();
         let result = day09::part1(input.0, input.1);
