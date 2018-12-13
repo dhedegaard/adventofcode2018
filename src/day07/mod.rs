@@ -8,7 +8,10 @@ pub fn parse_input(input: &str) -> HashMap<char, Vec<char>> {
     let mut result = HashMap::new();
     for line in input.lines() {
         let chars = line.chars().collect::<Vec<_>>();
-        result.entry(chars[5]).or_insert_with(|| vec![]).push(chars[36]);
+        result
+            .entry(chars[5])
+            .or_insert_with(|| vec![])
+            .push(chars[36]);
     }
     result
 }
