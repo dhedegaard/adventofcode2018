@@ -8,7 +8,7 @@ pub fn parse_input(input: &str) -> HashMap<char, Vec<char>> {
     let mut result = HashMap::new();
     for line in input.lines() {
         let chars = line.chars().collect::<Vec<_>>();
-        result.entry(chars[5]).or_insert(vec![]).push(chars[36]);
+        result.entry(chars[5]).or_insert_with(|| vec![]).push(chars[36]);
     }
     result
 }
@@ -138,5 +138,4 @@ Step F must be finished before step E can begin.";
     fn part2_result() {
         assert_eq!(part2(&mut parse_input_part2(&get_input()), 5, 60), 991);
     }
-
 }

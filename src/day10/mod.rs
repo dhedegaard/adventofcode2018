@@ -75,7 +75,7 @@ fn generate_board_graphics(board: &[Point]) -> String {
 
 fn solve(input: &[Point]) -> (String, u32) {
     let mut seconds = 0;
-    let mut board = input.iter().map(|p| p.clone()).collect::<Vec<_>>();
+    let mut board = input.to_vec();
     let mut current_grid_size = grid_size(&board);
     loop {
         // Tick all the points.

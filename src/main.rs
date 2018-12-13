@@ -183,14 +183,14 @@ fn main() {
     {
         let (state, instructions) = day12::parse_input(&day12::get_input());
         let before = time::now();
-        let result = day12::part1(state, &instructions);
+        let result = day12::part1(&state, &instructions);
         let diff = time::now() - before;
         table.add_row(row![12, 1, format!("{:?}", result), diff]);
     }
     {
         let (state, instructions) = day12::parse_input(&day12::get_input());
         let before = time::now();
-        let result = day12::part2(state, &instructions);
+        let result = day12::part2(&state, &instructions);
         let diff = time::now() - before;
         table.add_row(row![12, 2, format!("{:?}", result), diff]);
     }

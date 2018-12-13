@@ -18,7 +18,7 @@ impl Node {
         // Otherwise, use metadata as index in children, and sum the selected children.
         self.metadata
             .iter()
-            .filter(|&e| e > &0 && e - 1 < self.children.len())
+            .filter(|&&e| e > 0 && e - 1 < self.children.len())
             .map(|&e| self.children[e - 1].value())
             .sum()
     }

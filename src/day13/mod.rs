@@ -217,13 +217,13 @@ mod tests {
     #[test]
     fn part1_examples() {
         let (board, carts) = parse_input(TEST_INPUT);
-        assert_eq!(part1(board, carts), Position { x: 7, y: 3 });
+        assert_eq!(part1(&board, &carts), Position { x: 7, y: 3 });
     }
 
     #[test]
     fn part1_result() {
         let (board, carts) = parse_input(&get_input());
-        assert_eq!(part1(board, carts), Position { x: 41, y: 22 });
+        assert_eq!(part1(&board, &carts), Position { x: 41, y: 22 });
     }
 
     #[test]

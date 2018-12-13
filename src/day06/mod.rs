@@ -28,7 +28,7 @@ pub fn parse_input(input: &str) -> Vec<Point> {
         .collect()
 }
 
-pub fn part1(input: &Vec<Point>) -> u32 {
+pub fn part1(input: &[Point]) -> u32 {
     // Determine the boundaries of the map.
     let min_x = input.iter().map(|e| e.x).min().unwrap();
     let max_x = input.iter().map(|e| e.x).max().unwrap();
@@ -42,8 +42,8 @@ pub fn part1(input: &Vec<Point>) -> u32 {
     let mut at_edge = HashSet::new();
 
     // Loop through all the points in the grid inside the boundaries, and calculate the closest points based on the existing map data.
-    for x in min_x..max_x + 1 {
-        for y in min_y..max_y + 1 {
+    for x in min_x..=max_x {
+        for y in min_y..=max_y {
             // Determine the closest destination, and the distance to it.
             let mut min_dist = None;
             let mut closest = None;
@@ -79,7 +79,7 @@ pub fn part1(input: &Vec<Point>) -> u32 {
         .to_owned()
 }
 
-pub fn part2(input: &Vec<Point>, less_than: i32) -> u32 {
+pub fn part2(input: &[Point], less_than: i32) -> u32 {
     let min_x = input.iter().map(|e| e.x).min().unwrap();
     let max_x = input.iter().map(|e| e.x).max().unwrap();
     let min_y = input.iter().map(|e| e.y).min().unwrap();
@@ -87,8 +87,8 @@ pub fn part2(input: &Vec<Point>, less_than: i32) -> u32 {
 
     let mut count = 0;
 
-    for x in min_x..max_x + 1 {
-        for y in min_y..max_y + 1 {
+    for x in min_x..=max_x {
+        for y in min_y..=max_y {
             let mut sum: i32 = 0;
             for &point in input.iter() {
                 sum += (point.x - x).abs() + (point.y - y).abs();

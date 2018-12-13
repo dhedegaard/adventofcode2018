@@ -20,7 +20,7 @@ pub fn parse_input(input: &str) -> (String, HashMap<String, char>) {
 }
 
 pub fn solve(
-    initial_state: String,
+    initial_state: &str,
     instructions: &HashMap<String, char>,
     generations: usize,
 ) -> isize {
@@ -64,12 +64,12 @@ pub fn solve(
     last
 }
 
-pub fn part1(initial_state: String, instructions: &HashMap<String, char>) -> isize {
-    solve(initial_state, instructions, 20)
+pub fn part1(initial_state: &str, instructions: &HashMap<String, char>) -> isize {
+    solve(&initial_state, instructions, 20)
 }
 
-pub fn part2(initial_state: String, instructions: &HashMap<String, char>) -> isize {
-    solve(initial_state, instructions, 50_000_000_000)
+pub fn part2(initial_state: &str, instructions: &HashMap<String, char>) -> isize {
+    solve(&initial_state, instructions, 50_000_000_000)
 }
 
 #[cfg(test)]
@@ -81,24 +81,24 @@ mod tests {
     #[test]
     fn part1_examples() {
         let (state, instructions) = parse_input(TEST_INPUT);
-        assert_eq!(part1(state, &instructions), 325);
+        assert_eq!(part1(&state, &instructions), 325);
     }
 
     #[test]
     fn part1_result() {
         let (state, instructions) = parse_input(&get_input());
-        assert_eq!(part1(state, &instructions), 2349);
+        assert_eq!(part1(&state, &instructions), 2349);
     }
 
     #[test]
     fn part2_examples() {
         let (state, instructions) = parse_input(TEST_INPUT);
-        assert_eq!(part2(state, &instructions), 999999999374);
+        assert_eq!(part2(&state, &instructions), 999999999374);
     }
 
     #[test]
     fn part2_result() {
         let (state, instructions) = parse_input(&get_input());
-        assert_eq!(part2(state, &instructions), 2100000001168);
+        assert_eq!(part2(&state, &instructions), 2100000001168);
     }
 }
