@@ -194,6 +194,20 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![12, 2, format!("{:?}", result), diff]);
     }
+    {
+        let (board, carts) = day13::parse_input(&day13::get_input());
+        let before = time::now();
+        let result = day13::part1(&board, &carts);
+        let diff = time::now() - before;
+        table.add_row(row![13, 1, format!("{:?}", result), diff]);
+    }
+    {
+        let (board, carts) = day13::parse_input(&day13::get_input());
+        let before = time::now();
+        let result = day13::part2(&board, &carts);
+        let diff = time::now() - before;
+        table.add_row(row![13, 2, format!("{:?}", result), diff]);
+    }
 
     table.printstd();
 }

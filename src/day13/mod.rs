@@ -116,8 +116,8 @@ impl Cart {
     }
 }
 
-pub fn part1(board: Vec<Vec<char>>, initial_carts: Vec<Cart>) -> Position {
-    let mut carts = initial_carts.iter().cloned().collect::<Vec<_>>();
+pub fn part1(board: &[Vec<char>], initial_carts: &[Cart]) -> Position {
+    let mut carts = initial_carts.to_vec();
     loop {
         // All the positions, for all the carts, before ticking anything.
         let mut positions = carts.iter().map(|c| c.position).collect::<HashSet<_>>();
@@ -141,8 +141,8 @@ pub fn part1(board: Vec<Vec<char>>, initial_carts: Vec<Cart>) -> Position {
     }
 }
 
-pub fn part2(board: Vec<Vec<char>>, initial_carts: Vec<Cart>) -> Position {
-    let mut carts = initial_carts.iter().cloned().collect::<Vec<_>>();
+pub fn part2(board: &[Vec<char>], initial_carts: &[Cart]) -> Position {
+    let mut carts = initial_carts.to_vec();
     loop {
         // If we're done, return the last carts position.
         if carts.len() == 1 {
@@ -229,12 +229,12 @@ mod tests {
     #[test]
     fn part2_examples() {
         let (board, carts) = parse_input(TEST_INPUT2);
-        assert_eq!(part2(board, carts), Position { x: 6, y: 4 });
+        assert_eq!(part2(&board, &carts), Position { x: 6, y: 4 });
     }
 
     #[test]
     fn part2_result() {
         let (board, carts) = parse_input(&get_input());
-        assert_eq!(part2(board, carts), Position { x: 84, y: 90 });
+        assert_eq!(part2(&board, &carts), Position { x: 84, y: 90 });
     }
 }
