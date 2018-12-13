@@ -6,12 +6,7 @@ pub fn get_input() -> String {
 
 pub fn parse_input(input: &str) -> (String, HashMap<String, char>) {
     let lines = input.lines().collect::<Vec<_>>();
-    let state = lines[0]
-        .split(": ")
-        .nth(1)
-        .unwrap()
-        .trim()
-        .to_owned();
+    let state = lines[0].split(": ").nth(1).unwrap().trim().to_owned();
     let map = lines[2..]
         .iter()
         .map(|&line| {
@@ -24,7 +19,11 @@ pub fn parse_input(input: &str) -> (String, HashMap<String, char>) {
     (state, map)
 }
 
-pub fn solve(initial_state: String, instructions: &HashMap<String, char>, generations: usize) -> isize {
+pub fn solve(
+    initial_state: String,
+    instructions: &HashMap<String, char>,
+    generations: usize,
+) -> isize {
     let mut n = String::from("...");
     n.push_str(&initial_state);
     n.push_str("...");
