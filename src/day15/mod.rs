@@ -2,14 +2,11 @@ use std::cmp::Reverse;
 use std::collections::BinaryHeap;
 use std::collections::HashMap;
 use std::collections::HashSet;
-use std::io::BufRead;
-use std::io::BufReader;
-use std::io::Read;
 
 type Point = (usize, usize);
 
-pub fn get_input() -> &'static [u8] {
-    include_bytes!("input.txt")
+pub fn get_input() -> String {
+    include_str!("input.txt").to_owned()
 }
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Copy, Clone)]
@@ -54,11 +51,8 @@ impl Day15 {
         Default::default()
     }
 
-    fn read_input(&mut self, input: &mut Read) {
-        let reader = BufReader::new(input);
-
-        for (y, line) in reader.lines().enumerate() {
-            let line = line.unwrap();
+    fn read_input(&mut self, input: &str) {
+        for (y, line) in input.lines().enumerate() {
             let mut current = vec![false; line.len()];
 
             for (x, c) in line.chars().enumerate() {
@@ -189,7 +183,7 @@ impl Day15 {
     }
 }
 
-pub fn part1(input: &mut Read) -> String {
+pub fn part1(input: &str) -> String {
     let mut inst = Day15::new();
     inst.read_input(input);
     let mut rounds = 0;
@@ -199,7 +193,7 @@ pub fn part1(input: &mut Read) -> String {
     inst.return_score(rounds)
 }
 
-pub fn part2(input: &mut Read) -> String {
+pub fn part2(input: &str) -> String {
     let mut inst = Day15::new();
     inst.read_input(input);
     let backup = inst.units.clone();
@@ -234,28 +228,27 @@ pub fn part2(input: &mut Read) -> String {
 mod tests {
     use super::*;
 
-    const TEST_INPUT: &[u8] = include_bytes!("test.txt");
+    const TEST_INPUT: &str = include_str!("test.txt");
 
     #[test]
     fn part1_examples() {
-        assert_eq!(part1(&mut TEST_INPUT), "27730");
+        assert_eq!(part1(&TEST_INPUT), "27730");
     }
 
     #[test]
     fn part1_result() {
-        let mut input = get_input();
-        assert_eq!(part1(&mut input), "319410");
+        let  input = get_input();
+        assert_eq!(part1(&input), "319410");
     }
 
     #[test]
     fn part2_examples() {
-        assert_eq!(part2(&mut TEST_INPUT), "4988");
+        assert_eq!(part2(&TEST_INPUT), "4988");
     }
 
     #[test]
     fn part2_result() {
-        let mut input = get_input();
-        assert_eq!(part2(&mut input), "63168");
+        let  input = get_input();
+        assert_eq!(part2(&input), "63168");
     }
-
 }

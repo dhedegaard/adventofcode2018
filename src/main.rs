@@ -223,16 +223,16 @@ fn main() {
         table.add_row(row![14, 2, format!("{:?}", result), diff]);
     }
     {
-        let mut input = day15::get_input();
+        let  input = day15::get_input();
         let before = time::now();
-        let result = day15::part1(&mut input);
+        let result = day15::part1(&input);
         let diff = time::now() - before;
         table.add_row(row![15, 1, result, diff]);
     }
     {
-        let mut input = day15::get_input();
+        let  input = day15::get_input();
         let before = time::now();
-        let result = day15::part2(&mut input);
+        let result = day15::part2(&input);
         let diff = time::now() - before;
         table.add_row(row![15, 2, result, diff]);
     }
