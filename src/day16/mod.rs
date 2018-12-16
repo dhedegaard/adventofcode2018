@@ -7,7 +7,10 @@ pub fn get_input_part1() -> String {
 }
 
 pub fn get_input_part2() -> Vec<Vec<usize>> {
-    include_str!("input2.txt").lines().map(|line| line_to_vec(line)).collect()
+    include_str!("input2.txt")
+        .lines()
+        .map(|line| line_to_vec(line))
+        .collect()
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -158,9 +161,11 @@ pub fn calc_mapping(input: &mut [Part1Input]) -> HashMap<usize, Inst> {
             }
         }
         // Fetch the valid instructions set for the given opcode (all of them if it's the firt time).
-        let mut value = possible_opcodes.entry(elem.inst[0]).or_insert_with(||
-            (0x0..=0xf).map(|e| Inst::from_usize(e)
-            ).collect::<HashSet<_>>());
+        let mut value = possible_opcodes.entry(elem.inst[0]).or_insert_with(|| {
+            (0x0..=0xf)
+                .map(Inst::from_usize)
+                .collect::<HashSet<_>>()
+        });
         // Filter away any non-valid instructions for the given opcode.
         value.retain(|e| possible.contains(e));
     }
@@ -206,7 +211,7 @@ pub fn part2(input: &mut [Part1Input], input2: &[Vec<usize>]) -> usize {
 
     // Execute the instructions.
     let mut reg = vec![0; 4];
-    for ref line in input2 {
+    for line in input2 {
         exec(mapping[&line[0]], line[1], line[2], line[3], &mut reg);
     }
     reg[0]
@@ -232,6 +237,9 @@ mod tests {
 
     #[test]
     fn part2_result() {
-        assert_eq!(part2(&mut parse_input(&get_input_part1()), &get_input_part2()), 525);
+        assert_eq!(
+            part2(&mut parse_input(&get_input_part1()), &get_input_part2()),
+            525
+        );
     }
 }

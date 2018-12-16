@@ -238,5 +238,21 @@ fn main() {
         table.add_row(row![15, 2, result, diff]);
     }
 
+    {
+        let mut input = day16::parse_input(&day16::get_input_part1());
+        let before = time::now();
+        let result = day16::part1(&mut input);
+        let diff = time::now() - before;
+        table.add_row(row![16, 1, result, diff]);
+    }
+    {
+        let mut input = day16::parse_input(&day16::get_input_part1());
+        let input2 = day16::get_input_part2();
+        let before = time::now();
+        let result = day16::part2(&mut input, &input2);
+        let diff = time::now() - before;
+        table.add_row(row![16, 2, result, diff]);
+    }
+
     table.printstd();
 }
