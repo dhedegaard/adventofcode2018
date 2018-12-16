@@ -1,10 +1,16 @@
 extern crate regex;
 
+use std::collections::{HashMap, HashSet};
+
 pub fn get_input_part1() -> String {
     include_str!("input1.txt").to_owned()
 }
 
-#[derive(Debug, Copy, Clone)]
+pub fn get_input_part2() -> Vec<Vec<usize>> {
+    include_str!("input2.txt").lines().map(|line| line_to_vec(line)).collect()
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum Inst {
     /// add register
     Addr,
@@ -137,6 +143,75 @@ pub fn part1(input: &mut [Part1Input]) -> usize {
     result
 }
 
+/// Calculates the opcode <-> instruction mappings, based on the input.
+pub fn calc_mapping(input: &mut [Part1Input]) -> HashMap<usize, Inst> {
+    // Maps opcodes -> possible instructions.
+    let mut possible_opcodes = HashMap::new();
+    for elem in input {
+        let mut possible = HashSet::new();
+        for opcode in 0x0..=0xf {
+            let opcode = Inst::from_usize(opcode);
+            let mut reg = elem.before.clone();
+            exec(opcode, elem.inst[1], elem.inst[2], elem.inst[3], &mut reg);
+            if reg == elem.after.as_slice() {
+                possible.insert(opcode);
+            }
+        }
+        // Fetch the valid instructions set for the given opcode (all of them if it's the firt time).
+        let mut value = possible_opcodes.entry(elem.inst[0]).or_insert_with(||
+            (0x0..=0xf).map(|e| Inst::from_usize(e)
+            ).collect::<HashSet<_>>());
+        // Filter away any non-valid instructions for the given opcode.
+        value.retain(|e| possible.contains(e));
+    }
+
+    // Maps specific opcodes -> instructions.
+    let mut mapping = HashMap::new();
+    // the instructions that have been mapped.
+    let mut mapped_instructions = HashSet::new();
+    loop {
+        if possible_opcodes.is_empty() {
+            break;
+        }
+        let mut matched = None;
+        // Go looking for opcodes that point to a single instruction.
+        for opcode in 0x0..=0xf {
+            let mut insts = possible_opcodes.get_mut(&opcode);
+            if insts.is_none() {
+                continue;
+            }
+            let mut insts = insts.unwrap();
+            if insts.len() == 1 {
+                let inst = insts.iter().next().unwrap().to_owned();
+                mapping.insert(opcode, inst);
+                mapped_instructions.insert(inst);
+                matched = Some((opcode, inst));
+            }
+        }
+        // Remove the inst from the possible opcodes map.
+        if matched.is_some() {
+            let (opcode, inst) = matched.unwrap();
+            possible_opcodes.remove(&opcode);
+            for insts in possible_opcodes.values_mut() {
+                insts.remove(&inst);
+            }
+        }
+    }
+    mapping
+}
+
+pub fn part2(input: &mut [Part1Input], input2: &[Vec<usize>]) -> usize {
+    // Determine the opcode mapping.
+    let mapping = calc_mapping(input);
+
+    // Execute the instructions.
+    let mut reg = vec![0; 4];
+    for ref line in input2 {
+        exec(mapping[&line[0]], line[1], line[2], line[3], &mut reg);
+    }
+    reg[0]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -153,5 +228,10 @@ mod tests {
     fn part1_result() {
         let mut input = parse_input(&get_input_part1());
         assert_eq!(part1(&mut input), 663);
+    }
+
+    #[test]
+    fn part2_result() {
+        assert_eq!(part2(&mut parse_input(&get_input_part1()), &get_input_part2()), 525);
     }
 }
