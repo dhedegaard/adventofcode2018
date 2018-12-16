@@ -19,6 +19,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 
 fn main() {
     let mut table = Table::new();
@@ -220,6 +221,20 @@ fn main() {
         let result = day14::part2(&format!("{}", day14::get_input()));
         let diff = time::now() - before;
         table.add_row(row![14, 2, format!("{:?}", result), diff]);
+    }
+    {
+        let mut input = day15::get_input();
+        let before = time::now();
+        let result = day15::part1(&mut input);
+        let diff = time::now() - before;
+        table.add_row(row![15, 1, result, diff]);
+    }
+    {
+        let mut input = day15::get_input();
+        let before = time::now();
+        let result = day15::part2(&mut input);
+        let diff = time::now() - before;
+        table.add_row(row![15, 2, result, diff]);
     }
 
     table.printstd();

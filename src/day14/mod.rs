@@ -43,14 +43,14 @@ pub fn part2(input: &str) -> usize {
         recipes.push(score);
         elf1 = (elf1 + 1 + recipes[elf1]) % recipes.len();
         elf2 = (elf2 + 1 + recipes[elf2]) % recipes.len();
-        let rel_l = recipes.len();
+        let rec_l = recipes.len();
         let in_l = parsed_input.len();
-        if rel_l > in_l && &recipes[rel_l - in_l..rel_l] == parsed_input {
-            result = rel_l - in_l;
+        if rec_l > in_l && &recipes[rec_l - in_l..rec_l] == parsed_input {
+            result = rec_l - in_l;
             break;
         }
-        if double && rel_l > in_l + 1 && &recipes[rel_l - 1 - in_l..rel_l - 1] == parsed_input {
-            result = rel_l - 1 - in_l;
+        if double && rec_l > in_l + 1 && &recipes[rec_l - 1 - in_l..rec_l - 1] == parsed_input {
+            result = rec_l - 1 - in_l;
             break;
         }
     }
