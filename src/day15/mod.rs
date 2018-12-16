@@ -237,7 +237,7 @@ mod tests {
 
     #[test]
     fn part1_result() {
-        let  input = get_input();
+        let input = get_input();
         assert_eq!(part1(&input), "319410");
     }
 
@@ -248,7 +248,7 @@ mod tests {
 
     #[test]
     fn part2_result() {
-        let  input = get_input();
+        let input = get_input();
         assert_eq!(part2(&input), "63168");
     }
 }
