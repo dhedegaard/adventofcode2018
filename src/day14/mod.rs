@@ -1,5 +1,5 @@
 pub fn get_input() -> usize {
-    704321
+    704_321
 }
 
 pub fn part1(input: usize) -> String {
