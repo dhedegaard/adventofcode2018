@@ -254,7 +254,7 @@ fn main() {
         table.add_row(row![16, 2, result, diff]);
     }
     {
-        let mut grid= day17::Grid::from_input(&day17::get_input());
+        let mut grid = day17::Grid::from_input(&day17::get_input());
         let before = time::now();
         grid.flow();
         let result = grid.part1();
@@ -262,7 +262,7 @@ fn main() {
         table.add_row(row![17, 1, result, diff]);
     }
     {
-        let mut grid= day17::Grid::from_input(&day17::get_input());
+        let mut grid = day17::Grid::from_input(&day17::get_input());
         let before = time::now();
         grid.flow();
         let result = grid.part2();

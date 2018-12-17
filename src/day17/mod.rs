@@ -113,7 +113,7 @@ impl Grid {
             let c5 = caps[5].parse::<usize>().unwrap();
 
             if c1 == "x" {
-                for (y, row) in grid.iter_mut().enumerate().take(c5+1).skip(c4) {
+                for (y, row) in grid.iter_mut().enumerate().take(c5 + 1).skip(c4) {
                     max_y = std::cmp::max(max_y, y);
                     min_y = std::cmp::min(min_y, y);
                     row[c2] = '#';
