@@ -117,7 +117,7 @@ pub fn part2(area: &[Vec<Acre>]) -> usize {
             let delta = minute - cycle_start;
             let remaining = cap - minute;
             let cycle_count = remaining / delta;
-            // If we have, automate as many cycles as possible.
+            // Automate as many cycles as possible.
             minute += cycle_count * delta;
         }
         seen.insert(area.clone(), minute);
