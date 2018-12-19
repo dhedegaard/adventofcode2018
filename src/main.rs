@@ -2,8 +2,7 @@
 extern crate prettytable;
 extern crate time;
 
-use prettytable::format;
-use prettytable::Table;
+use prettytable::{format, Table};
 
 mod day01;
 mod day02;
@@ -29,6 +28,7 @@ fn main() {
     let mut table = Table::new();
     table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
     table.set_titles(row!["Day", "Part", "Result", "Duration"]);
+    let total_before = time::now();
 
     {
         let input = day01::parse_input(&day01::raw_input());
@@ -299,6 +299,8 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![19, 2, result, diff]);
     }
+
+    table.add_row(row!["", "", "Total duration:", time::now() - total_before]);
 
     table.printstd();
 }
