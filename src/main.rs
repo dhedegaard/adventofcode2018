@@ -301,6 +301,20 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![19, 2, result, diff]);
     }
+    {
+        let map = day20::parse_input(&day20::get_input());
+        let before = time::now();
+        let result = day20::part1(&map);
+        let diff = time::now() - before;
+        table.add_row(row![20, 1, result, diff]);
+    }
+    {
+        let map = day20::parse_input(&day20::get_input());
+        let before = time::now();
+        let result = day20::part2(&map);
+        let diff = time::now() - before;
+        table.add_row(row![20, 2, result, diff]);
+    }
 
     table.add_row(row!["", "", "Total duration:", time::now() - total_before]);
 

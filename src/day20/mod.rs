@@ -76,7 +76,7 @@ pub fn part1(map: &HashMap<Point, (Point, i32)>) -> i32 {
     map.values().map(|(_, e)| *e).max().unwrap()
 }
 
-fn part2(map: &HashMap<Point, (Point, i32)>) -> usize {
+pub fn part2(map: &HashMap<Point, (Point, i32)>) -> usize {
     map.values().filter(|&(_, c)| *c >= 1000).count()
 }
 
