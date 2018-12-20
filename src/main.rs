@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate prettytable;
+extern crate pathfinding;
 extern crate time;
 
 use prettytable::{format, Table};
@@ -23,6 +24,7 @@ mod day16;
 mod day17;
 mod day18;
 mod day19;
+mod day20;
 
 fn main() {
     let mut table = Table::new();
