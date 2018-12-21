@@ -25,6 +25,7 @@ mod day17;
 mod day18;
 mod day19;
 mod day20;
+mod day21;
 
 fn main() {
     let mut table = Table::new();
@@ -314,6 +315,20 @@ fn main() {
         let result = day20::part2(&map);
         let diff = time::now() - before;
         table.add_row(row![20, 2, result, diff]);
+    }
+    {
+        let (ip, instructions) = day19::parse_input(&day21::get_input());
+        let before = time::now();
+        let result = day21::part1(ip, &instructions);
+        let diff = time::now() - before;
+        table.add_row(row![21, 1, result, diff]);
+    }
+    {
+        let (ip, instructions) = day19::parse_input(&day21::get_input());
+        let before = time::now();
+        let result = day21::part2(ip, &instructions);
+        let diff = time::now() - before;
+        table.add_row(row![21, 2, result, diff]);
     }
 
     table.add_row(row!["", "", "Total duration:", time::now() - total_before]);

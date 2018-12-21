@@ -43,7 +43,7 @@ pub fn parse_input(input: &str) -> (usize, Vec<Instruction>) {
                     "eqir" => Inst::Eqir,
                     "eqri" => Inst::Eqri,
                     "eqrr" => Inst::Eqrr,
-                    inst => unreachable!(),
+                    _ => unreachable!(),
                 },
                 in1: parts.next().unwrap().parse().unwrap(),
                 in2: parts.next().unwrap().parse().unwrap(),
