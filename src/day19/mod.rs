@@ -2,10 +2,10 @@ use day16::{exec, Inst};
 
 #[derive(Debug)]
 pub struct Instruction {
-    inst: Inst,
-    in1: usize,
-    in2: usize,
-    out: usize,
+    pub inst: Inst,
+    pub in1: usize,
+    pub in2: usize,
+    pub out: usize,
 }
 
 pub fn get_input() -> String {
@@ -33,6 +33,7 @@ pub fn parse_input(input: &str) -> (usize, Vec<Instruction>) {
                     "mulr" => Inst::Mulr,
                     "muli" => Inst::Muli,
                     "banr" => Inst::Banr,
+                    "bani" => Inst::Bani,
                     "borr" => Inst::Borr,
                     "bori" => Inst::Bori,
                     "setr" => Inst::Setr,
@@ -40,8 +41,9 @@ pub fn parse_input(input: &str) -> (usize, Vec<Instruction>) {
                     "gtir" => Inst::Gtir,
                     "gtrr" => Inst::Gtrr,
                     "eqir" => Inst::Eqir,
+                    "eqri" => Inst::Eqri,
                     "eqrr" => Inst::Eqrr,
-                    _ => unreachable!(),
+                    inst => unreachable!(),
                 },
                 in1: parts.next().unwrap().parse().unwrap(),
                 in2: parts.next().unwrap().parse().unwrap(),
