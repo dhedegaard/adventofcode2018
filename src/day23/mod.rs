@@ -1,4 +1,6 @@
-#[derive(Debug, Eq, PartialEq, Hash, Copy, Clone)]
+use std::collections::BTreeMap;
+
+#[derive(Debug, Eq, PartialEq)]
 pub struct Position {
     x: i64,
     y: i64,
@@ -15,7 +17,7 @@ impl Position {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Hash, Copy, Clone)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Nanobot {
     pos: Position,
     radius: i64,
@@ -66,11 +68,33 @@ pub fn part1(nanobots: &[Nanobot]) -> usize {
     total
 }
 
+pub fn part2(nanobots: &[Nanobot]) -> i64 {
+    // The order of intertion matters in the iterator below, therefore we use b tree as the order
+    // of insertion is preserved when iterating.
+    let mut map = BTreeMap::new();
+    for b in nanobots {
+        *map.entry(b.pos.x + b.pos.y + b.pos.z - b.radius).or_insert(0) += 1;
+        *map.entry(b.pos.x + b.pos.y + b.pos.z + b.radius + 1).or_insert(0) -= 1;
+    }
+    let mut running = 0;
+    let mut max = 0;
+    let mut max_start = 0;
+    map.iter().for_each(|(&pos, &v)| {
+        running += v;
+        if running > max {
+            max = running;
+            max_start = pos;
+        }
+    });
+    *map.keys().skip_while(|&&v| v <= max_start).next().unwrap() - 1
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     const TEST_INPUT: &str = include_str!("test.txt");
+    const TEST_INPUT2: &str = include_str!("test2.txt");
 
     #[test]
     fn part1_examples() {
@@ -82,5 +106,11 @@ mod tests {
     fn part1_result() {
         let nanobots = parse_input(&get_input());
         assert_eq!(part1(&nanobots), 326);
+    }
+
+    #[test]
+    fn part2_examples() {
+        let nanobots = parse_input(TEST_INPUT2);
+        assert_eq!(part2(&nanobots), 36);
     }
 }
