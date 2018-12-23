@@ -73,8 +73,10 @@ pub fn part2(nanobots: &[Nanobot]) -> i64 {
     // of insertion is preserved when iterating.
     let mut map = BTreeMap::new();
     for b in nanobots {
-        *map.entry(b.pos.x + b.pos.y + b.pos.z - b.radius).or_insert(0) += 1;
-        *map.entry(b.pos.x + b.pos.y + b.pos.z + b.radius + 1).or_insert(0) -= 1;
+        *map.entry(b.pos.x + b.pos.y + b.pos.z - b.radius)
+            .or_insert(0) += 1;
+        *map.entry(b.pos.x + b.pos.y + b.pos.z + b.radius + 1)
+            .or_insert(0) -= 1;
     }
     let mut running = 0;
     let mut max = 0;
@@ -110,6 +112,12 @@ mod tests {
 
     #[test]
     fn part2_examples() {
+        let nanobots = parse_input(TEST_INPUT2);
+        assert_eq!(part2(&nanobots), 36);
+    }
+
+    #[test]
+    fn part2_result() {
         let nanobots = parse_input(TEST_INPUT2);
         assert_eq!(part2(&nanobots), 36);
     }

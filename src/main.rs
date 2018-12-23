@@ -346,6 +346,20 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![22, 2, result, diff]);
     }
+    {
+        let nanobots = day23::parse_input(&day23::get_input());
+        let before = time::now();
+        let result = day23::part1(&nanobots);
+        let diff = time::now() - before;
+        table.add_row(row![23, 1, result, diff]);
+    }
+    {
+        let nanobots = day23::parse_input(&day23::get_input());
+        let before = time::now();
+        let result = day23::part2(&nanobots);
+        let diff = time::now() - before;
+        table.add_row(row![23, 2, result, diff]);
+    }
 
     table.add_row(row!["", "", "Total duration:", time::now() - total_before]);
 
