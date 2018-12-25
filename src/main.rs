@@ -362,6 +362,27 @@ fn main() {
         let diff = time::now() - before;
         table.add_row(row![23, 2, result, diff]);
     }
+    {
+        let armies = day24::parse_input(&day24::get_input());
+        let before = time::now();
+        let result = day24::part1(&armies);
+        let diff = time::now() - before;
+        table.add_row(row![24, 1, result, diff]);
+    }
+    {
+        let armies= day24::parse_input(&day24::get_input());
+        let before = time::now();
+        let result = day24::part2(&armies);
+        let diff = time::now() - before;
+        table.add_row(row![24, 2, result, diff]);
+    }
+    {
+        let input= day25::parse_input(&day25::get_input());
+        let before = time::now();
+        let result = day25::part1(&input);
+        let diff = time::now() - before;
+        table.add_row(row![25, 1, result, diff]);
+    }
 
     table.add_row(row!["", "", "Total duration:", time::now() - total_before]);
 

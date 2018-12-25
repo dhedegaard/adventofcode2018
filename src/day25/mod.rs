@@ -4,9 +4,9 @@ pub fn get_input() -> String {
     include_str!("input.txt").to_owned()
 }
 
-type Input = Vec<(i64, i64, i64, i64, i64)>;
+type Input = [(i64, i64, i64, i64, i64)];
 
-pub fn parse_input(input: &str) -> Input {
+pub fn parse_input(input: &str) -> Vec<(i64, i64, i64, i64, i64)> {
     let mut points = vec![];
     for (i, line) in input.lines().enumerate() {
         let el: Vec<i64> = line.split(',').filter_map(|x| x.parse().ok()).collect();
@@ -29,9 +29,9 @@ pub fn part1(input: &Input) -> usize {
 
             if dis(p0, p1) <= 3 && p0.4 != p1.4 {
                 // merge constellations
-                for k in 0..input.len() {
-                    if input[k].4 == p1.4 {
-                        input[k].4 = p0.4;
+                for e in input.iter_mut() {
+                    if e.4 == p1.4 {
+                        e.4 = p0.4;
                     }
                 }
             }
