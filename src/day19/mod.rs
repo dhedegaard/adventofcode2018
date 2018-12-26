@@ -1,4 +1,4 @@
-use day16::{exec, Inst};
+use super::day16::{exec, Inst};
 
 #[derive(Debug)]
 pub struct Instruction {

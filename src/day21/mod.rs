@@ -1,5 +1,5 @@
-use day16::exec;
-use day19::Instruction;
+use super::day16::exec;
+use super::day19::Instruction;
 use std::collections::HashSet;
 
 pub fn get_input() -> String {

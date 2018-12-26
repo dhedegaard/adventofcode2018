@@ -2,6 +2,8 @@
 name = "adventofcode2018"
 version = "0.1.0"
 authors = ["Dennis Hedegaard <dennis@dhedegaard.dk>"]
+edition = "2018"
+repository = "https://github.com/dhedegaard/adventofcode2018"
 
 [dependencies]
 time = "0.1"

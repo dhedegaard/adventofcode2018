@@ -161,7 +161,7 @@ pub fn calc_mapping(input: &mut [Part1Input]) -> HashMap<usize, Inst> {
             }
         }
         // Fetch the valid instructions set for the given opcode (all of them if it's the firt time).
-        let mut value = possible_opcodes
+        let value = possible_opcodes
             .entry(elem.inst[0])
             .or_insert_with(|| (0x0..=0xf).map(Inst::from_usize).collect::<HashSet<_>>());
         // Filter away any non-valid instructions for the given opcode.
@@ -179,11 +179,11 @@ pub fn calc_mapping(input: &mut [Part1Input]) -> HashMap<usize, Inst> {
         let mut matched = None;
         // Go looking for opcodes that point to a single instruction.
         for opcode in 0x0..=0xf {
-            let mut insts = possible_opcodes.get_mut(&opcode);
+            let insts = possible_opcodes.get_mut(&opcode);
             if insts.is_none() {
                 continue;
             }
-            let mut insts = insts.unwrap();
+            let insts = insts.unwrap();
             if insts.len() == 1 {
                 let inst = insts.iter().next().unwrap().to_owned();
                 mapping.insert(opcode, inst);
