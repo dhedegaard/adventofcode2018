@@ -370,14 +370,14 @@ fn main() {
         table.add_row(row![24, 1, result, diff]);
     }
     {
-        let armies= day24::parse_input(&day24::get_input());
+        let armies = day24::parse_input(&day24::get_input());
         let before = time::now();
         let result = day24::part2(&armies);
         let diff = time::now() - before;
         table.add_row(row![24, 2, result, diff]);
     }
     {
-        let input= day25::parse_input(&day25::get_input());
+        let input = day25::parse_input(&day25::get_input());
         let before = time::now();
         let result = day25::part1(&input);
         let diff = time::now() - before;

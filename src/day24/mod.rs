@@ -133,11 +133,21 @@ fn battle(armies: &[Army]) -> (Option<Team>, isize) {
         let mut targets = vec![None; armies.len()];
         for idx_atk in attackers {
             let atk = &armies[idx_atk];
-            if atk.units <= 0 { continue; }
-            targets[idx_atk] = armies.iter().enumerate()
-                .filter(|(idx, def)| def.team != atk.team && def.units > 0 && !targets.contains(&Some(*idx)))
+            if atk.units <= 0 {
+                continue;
+            }
+            targets[idx_atk] = armies
+                .iter()
+                .enumerate()
+                .filter(|(idx, def)| {
+                    def.team != atk.team && def.units > 0 && !targets.contains(&Some(*idx))
+                })
                 .max_by_key(|(_idx, def)| {
-                    (def.calculate_damage(atk.ep(), atk.att_type), def.ep(), def.initiative)
+                    (
+                        def.calculate_damage(atk.ep(), atk.att_type),
+                        def.ep(),
+                        def.initiative,
+                    )
                 })
                 .map(|(idx, _def)| idx);
         }
@@ -145,7 +155,9 @@ fn battle(armies: &[Army]) -> (Option<Team>, isize) {
         attackers.sort_by_key(|&idx| -armies[idx].initiative);
         let mut total_killed = 0;
         for idx_atk in attackers {
-            if armies[idx_atk].units <= 0 { continue; }
+            if armies[idx_atk].units <= 0 {
+                continue;
+            }
             if let Some(idx_def) = targets[idx_atk] {
                 let (ap, dt) = {
                     let atk = &armies[idx_atk];
@@ -161,12 +173,16 @@ fn battle(armies: &[Army]) -> (Option<Team>, isize) {
         }
 
         // Otherwise determine the winner, if one of the teams have been defeated.
-        let alive_infections = armies.iter()
+        let alive_infections = armies
+            .iter()
             .filter(|&e| e.team == Team::Infection)
-            .map(|e| e.units).sum();
-        let alive_immunes = armies.iter()
+            .map(|e| e.units)
+            .sum();
+        let alive_immunes = armies
+            .iter()
             .filter(|&e| e.team == Team::Immune)
-            .map(|e| e.units).sum();
+            .map(|e| e.units)
+            .sum();
         if alive_infections == 0 {
             return (Some(Team::Immune), alive_immunes);
         }

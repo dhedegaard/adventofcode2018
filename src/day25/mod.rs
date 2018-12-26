@@ -42,7 +42,6 @@ pub fn part1(input: &Input) -> usize {
     part1.len()
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
