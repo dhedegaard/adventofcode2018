@@ -109,15 +109,9 @@ pub fn part2(input: &[(char, char)], workercount: usize, time_offset: i32) -> i3
 
 #[cfg(test)]
 mod tests {
-    use day07::{get_input, parse_input, parse_input_part2, part1, part2};
+    use super::*;
 
-    const TEST_INPUT: &str = "Step C must be finished before step A can begin.
-Step C must be finished before step F can begin.
-Step A must be finished before step B can begin.
-Step A must be finished before step D can begin.
-Step B must be finished before step E can begin.
-Step D must be finished before step E can begin.
-Step F must be finished before step E can begin.";
+    const TEST_INPUT: &str = include_str!("test.txt");
 
     #[test]
     fn part1_examples() {

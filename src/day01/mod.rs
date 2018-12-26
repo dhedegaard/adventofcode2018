@@ -29,7 +29,7 @@ pub fn part2(input: &[i32]) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use day01::{parse_input, part1, part2, raw_input};
+    use super::*;
 
     #[test]
     fn test_parse_input() {

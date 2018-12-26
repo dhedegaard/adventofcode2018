@@ -1,5 +1,6 @@
 use super::day16::exec;
 use super::day19::Instruction;
+use super::day19::parse_input;
 use std::collections::HashSet;
 
 pub fn get_input() -> String {
@@ -45,7 +46,6 @@ pub fn part2(ipr: usize, instructions: &[Instruction]) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use day19::parse_input;
 
     #[test]
     fn part1_result() {

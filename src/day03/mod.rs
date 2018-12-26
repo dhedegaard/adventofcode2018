@@ -80,11 +80,9 @@ pub fn part2(input: &[Claim]) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use day03::{get_input, parse_input, part1, part2, Claim};
+    use super::*;
 
-    const TEST_INPUT: &str = "#1 @ 1,3: 4x4
-#2 @ 3,1: 4x4
-#3 @ 5,5: 2x2";
+    const TEST_INPUT: &str = include_str!("test.txt");
 
     #[test]
     fn test_parse_input() {

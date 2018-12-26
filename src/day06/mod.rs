@@ -104,14 +104,9 @@ pub fn part2(input: &[Point], less_than: i32) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use day06::{get_input, parse_input, part1, part2};
+    use super::*;
 
-    const TEST_INPUT: &str = "1, 1
-1, 6
-8, 3
-3, 4
-5, 5
-8, 9";
+    const TEST_INPUT: &str = include_str!("test.txt");
 
     #[test]
     fn part1_examples() {

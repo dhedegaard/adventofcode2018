@@ -43,7 +43,7 @@ pub fn part2(input: &[&str]) -> String {
 
 #[cfg(test)]
 mod tests {
-    use day02::{get_input, part1, part2};
+    use super::*;
 
     #[test]
     fn test_part1_examples() {
