@@ -1,5 +1,8 @@
+use std::cmp::Reverse;
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum DmgType {
+    None,
     Cold,
     Fire,
     Radiation,
@@ -13,13 +16,13 @@ pub enum Team {
     Infection,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Army {
     team: Team,
     units: isize,
     hp: isize,
-    weak: Vec<DmgType>,
-    immune: Vec<DmgType>,
+    weak: [DmgType; 4],
+    immune: [DmgType; 4],
     ap: isize,
     att_type: DmgType,
     initiative: isize,
@@ -115,8 +118,8 @@ pub fn parse_input(input: &str) -> Vec<Army> {
             team,
             units: captures[1].parse().unwrap(),
             hp: captures[2].parse().unwrap(),
-            weak: weaknesses,
-            immune: immunities,
+            weak: vec_to_arr(&weaknesses),
+            immune: vec_to_arr(&immunities),
             ap: captures[4].parse().unwrap(),
             att_type: parse_dmg_type(&captures[5]),
             initiative: captures[6].parse().unwrap(),
@@ -125,69 +128,70 @@ pub fn parse_input(input: &str) -> Vec<Army> {
     result
 }
 
+/// Converts a slice of DmgType to an array with 4 DmgTypes, filled with None's at the end.
+fn vec_to_arr(input: &[DmgType]) -> [DmgType; 4] {
+    let mut input = input.to_vec();
+    while input.len() < 4 {
+        input.push(DmgType::None);
+    }
+    let mut result = [DmgType::None; 4];
+    result.copy_from_slice(&input);
+    result
+}
+
 fn battle(armies: &[Army]) -> (Option<Team>, isize) {
     let mut armies = armies.to_vec();
     loop {
-        let mut attackers = (0..armies.len()).collect::<Vec<usize>>();
-        attackers.sort_by_key(|&idx| (-armies[idx].ep(), -armies[idx].initiative));
-        let mut targets = vec![None; armies.len()];
-        for idx_atk in attackers {
-            let atk = &armies[idx_atk];
-            if atk.units <= 0 {
-                continue;
-            }
-            targets[idx_atk] = armies
-                .iter()
-                .enumerate()
-                .filter(|(idx, def)| {
-                    def.team != atk.team && def.units > 0 && !targets.contains(&Some(*idx))
-                })
-                .max_by_key(|(_idx, def)| {
-                    (
-                        def.calculate_damage(atk.ep(), atk.att_type),
-                        def.ep(),
-                        def.initiative,
-                    )
-                })
-                .map(|(idx, _def)| idx);
-        }
-        let mut attackers = (0..armies.len()).collect::<Vec<usize>>();
-        attackers.sort_by_key(|&idx| -armies[idx].initiative);
-        let mut total_killed = 0;
-        for idx_atk in attackers {
-            if armies[idx_atk].units <= 0 {
-                continue;
-            }
-            if let Some(idx_def) = targets[idx_atk] {
-                let (ap, dt) = {
-                    let atk = &armies[idx_atk];
-                    (atk.ep(), atk.att_type)
+        armies.sort_by_key(|v| Reverse((v.units * v.ap, v.initiative)));
+        let mut targets: Vec<Option<usize>> = vec![None; armies.len()];
+        for (j, u) in armies.iter().enumerate() {
+            let mut best = 0;
+            for (i, v) in armies.iter().enumerate() {
+                if u.team == v.team || targets.contains(&Some(i)) || v.units == 0 {
+                    continue;
+                }
+                if v.calculate_damage(u.ep(), u.att_type) > best {
+                    best = v.calculate_damage(u.ep(), u.att_type);
+                    targets[j] = Some(i);
                 };
-                total_killed += armies[idx_def].attack(ap, dt);
+            }
+        }
+        let mut attackers = (0..armies.len()).collect::<Vec<_>>();
+        attackers.sort_by_key(|&idx| Reverse(armies[idx].initiative));
+        let mut any_die = false;
+        for atk_idx in attackers {
+            if armies[atk_idx].units == 0 {
+                continue;
+            }
+            if let Some(j) = targets[atk_idx] {
+                let atk = armies[atk_idx];
+                let mut def = armies[j];
+                let killed = def.attack(atk.ep(), atk.att_type);
+                if killed > 0 {
+                    any_die = true;
+                }
+                armies[j] = def;
             }
         }
 
-        // Check for draw or statemate (ie immune vs immune).
-        if total_killed == 0 {
+        if !any_die {
             return (None, 0);
         }
 
-        // Otherwise determine the winner, if one of the teams have been defeated.
-        let alive_infections = armies
-            .iter()
-            .filter(|&e| e.team == Team::Infection)
-            .map(|e| e.units)
-            .sum();
-        let alive_immunes = armies
-            .iter()
-            .filter(|&e| e.team == Team::Immune)
-            .map(|e| e.units)
-            .sum();
-        if alive_infections == 0 {
-            return (Some(Team::Immune), alive_immunes);
-        }
-        if alive_immunes == 0 {
-            return (Some(Team::Infection), alive_infections);
+        let alive = armies.iter().fold((0, 0), |mut teams, army| {
+            if army.team == Team::Immune {
+                teams.0 += army.units;
+            } else {
+                teams.1 += army.units;
+            }
+            teams
+        });
+        if alive == (0, 0) {
+            return (None, 0);
+        } else if alive.0 == 0 {
+            return (Some(Team::Infection), alive.1);
+        } else if alive.1 == 0 {
+            return (Some(Team::Immune), alive.0);
         }
     }
 }
@@ -198,17 +202,17 @@ pub fn part1(input: &[Army]) -> isize {
 }
 
 pub fn part2(input: &[Army]) -> isize {
-    (0..)
-        .filter_map(|boost| {
-            let mut armies = input.to_vec();
-            for army in armies.iter_mut().filter(|army| army.team == Team::Immune) {
-                army.ap += boost;
-            }
-            let (team, rest) = battle(&armies);
-            if team.is_some() && team.unwrap() == Team::Immune {
-                Some(rest)
-            } else {
-                None
+    let armies = input.to_vec();
+    (1..)
+        .filter_map(|b| {
+            let mut armies = armies.clone();
+            armies
+                .iter_mut()
+                .filter(|u| u.team == Team::Immune)
+                .for_each(|u| u.ap += b);
+            match battle(&armies) {
+                (Some(Team::Immune), rem) => Some(rem),
+                _ => None,
             }
         })
         .next()
@@ -231,8 +235,8 @@ mod tests {
                 team: Team::Immune,
                 units: 17,
                 hp: 5390,
-                weak: vec![DmgType::Radiation, DmgType::Bludgeoning],
-                immune: vec![],
+                weak: vec_to_arr(&vec![DmgType::Radiation, DmgType::Bludgeoning]),
+                immune: vec_to_arr(&vec![]),
                 ap: 4507,
                 att_type: DmgType::Fire,
                 initiative: 2,
@@ -244,8 +248,8 @@ mod tests {
                 team: Team::Immune,
                 units: 989,
                 hp: 1274,
-                weak: vec![DmgType::Bludgeoning, DmgType::Slashing],
-                immune: vec![DmgType::Fire],
+                weak: vec_to_arr(&vec![DmgType::Bludgeoning, DmgType::Slashing]),
+                immune: vec_to_arr(&vec![DmgType::Fire]),
                 ap: 25,
                 att_type: DmgType::Slashing,
                 initiative: 3,
@@ -257,8 +261,8 @@ mod tests {
                 team: Team::Infection,
                 units: 801,
                 hp: 4706,
-                weak: vec![DmgType::Radiation],
-                immune: vec![],
+                weak: vec_to_arr(&vec![DmgType::Radiation]),
+                immune: vec_to_arr(&vec![]),
                 ap: 116,
                 att_type: DmgType::Bludgeoning,
                 initiative: 1,
@@ -282,5 +286,11 @@ mod tests {
     fn part2_examples() {
         let input = parse_input(TEST_INPUT);
         assert_eq!(part2(&input), 51);
+    }
+
+    #[test]
+    fn part2_result() {
+        let input = parse_input(&get_input());
+        assert_eq!(part2(&input), 4428);
     }
 }
