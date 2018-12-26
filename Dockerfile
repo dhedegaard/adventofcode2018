@@ -1,5 +1,10 @@
-FROM rust:latest
-
+FROM rust:slim AS BUILD
 COPY . ./
 
-CMD ["cargo", "test"]
+RUN cargo test -q --all --release
+RUN cargo build --release
+
+FROM debian:9-slim
+
+COPY --from=BUILD target/release/adventofcode2018 /
+CMD ["/adventofcode2018"]
