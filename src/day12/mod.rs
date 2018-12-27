@@ -22,14 +22,14 @@ pub fn parse_input(input: &str) -> (String, HashMap<String, char>) {
 pub fn solve(
     initial_state: &str,
     instructions: &HashMap<String, char>,
-    generations: usize,
-) -> isize {
+    generations: i64,
+) -> i64 {
     let mut n = String::from("...");
     n.push_str(&initial_state);
     n.push_str("...");
 
-    let mut last = 0;
-    let mut diffs: HashMap<isize, u32> = HashMap::new();
+    let mut last: i64 = 0;
+    let mut diffs: HashMap<i64, u32> = HashMap::new();
 
     for gen in 1..=generations {
         // Start with 3 empty pots at the beginning and the end, each time.
@@ -47,28 +47,28 @@ pub fn solve(
         n = s;
 
         // Make sure to grow the string at both ends.
-        let score = n
+        let score: i64 = n
             .chars()
             .enumerate()
             .filter(|(_, c)| c == &'#')
-            .map(|(i, _)| i as isize - (3 + gen as isize))
-            .sum::<isize>();
-        let e = diffs.entry(score as isize - last as isize).or_insert(0);
+            .map(|(i, _)| i as i64 - (3 + gen) as i64)
+            .sum();
+        let e = diffs.entry(score as i64 - last as i64).or_insert(0);
         if *e > 10 {
-            return (generations - gen) as isize * (score - last) + score;
+            return (generations - gen) as i64 * (score - last) + score;
         } else {
             *e += 1;
         }
         last = score;
     }
-    last
+    last as i64
 }
 
-pub fn part1(initial_state: &str, instructions: &HashMap<String, char>) -> isize {
+pub fn part1(initial_state: &str, instructions: &HashMap<String, char>) -> i64 {
     solve(&initial_state, instructions, 20)
 }
 
-pub fn part2(initial_state: &str, instructions: &HashMap<String, char>) -> isize {
+pub fn part2(initial_state: &str, instructions: &HashMap<String, char>) -> i64 {
     solve(&initial_state, instructions, 50_000_000_000)
 }
 
